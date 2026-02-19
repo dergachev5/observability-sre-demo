@@ -35,3 +35,9 @@ override.tf.json
 # Ignore CLI configuration files
 .terraformrc
 terraform.rc
+
+# local temp files (do not commit)
+values-current.yaml
+values-currrent.yaml
+value-current.yaml
+nodeport.yaml
