@@ -1,5 +1,0 @@
-components:
-  frontend-proxy:
-    service:
-      type: NodePort
-      nodePort: 30808
