@@ -93,3 +93,69 @@ kubectl get svc -A
 kubectl get ingress -A
 helm list -A
 kubectl get pods -A
+
+____
+
+## 9. **Installation Procedure**
+
+OpenTelemetry Demo deployment:
+kubectl create namespace otel-demo
+helm repo add open-telemetry https://open-telemetry.github.io/opentelemetry-helm-charts
+helm repo update
+helm install otel-demo open-telemetry/opentelemetry-demo -n otel-demo
+
+Verify:
+kubectl -n otel-demo get pods
+
+All pods must be in Running state.
+
+____
+
+## 10. Monitoring Deployment
+
+Helm repositories:
+helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
+helm repo add grafana https://grafana.github.io/helm-charts
+helm repo update
+
+Install monitoring stack:
+helm install monitoring prometheus-community/kube-prometheus-stack -n monitoring --create-namespace
+helm install loki grafana/loki -n monitoring
+helm install tempo grafana/tempo -n monitoring
+
+Verify:
+kubectl -n monitoring get pods
+
+_____
+
+## 11. Application Validation
+
+Access application:
+http://<node-ip>.nip.io:30080
+
+Validation flow:
+	•	Add product to cart
+	•	Proceed to checkout
+	•	Complete order
+	•	Confirm order confirmation page
+
+____
+
+## 12. Observability Validation
+
+Metrics:
+	•	Confirm request rate
+	•	Confirm error rate
+	•	Confirm latency metrics in Grafana
+
+Logs:
+	•	Verify logs from:
+	•	checkout
+	•	payment
+	•	product-catalog
+
+Traces:
+	•	Trigger checkout
+	•	Confirm distributed trace in Tempo
+
+___
