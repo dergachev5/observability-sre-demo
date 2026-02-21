@@ -94,7 +94,6 @@ kubectl get ingress -A
 helm list -A
 kubectl get pods -A
 
-____
 
 ## 9. **Installation Procedure**
 
@@ -109,7 +108,7 @@ kubectl -n otel-demo get pods
 
 All pods must be in Running state.
 
-____
+
 
 ## 10. Monitoring Deployment
 
@@ -126,7 +125,7 @@ helm install tempo grafana/tempo -n monitoring
 Verify:
 kubectl -n monitoring get pods
 
-_____
+
 
 ## 11. Application Validation
 
@@ -139,7 +138,7 @@ Validation flow:
 	•	Complete order
 	•	Confirm order confirmation page
 
-____
+
 
 ## 12. Observability Validation
 
