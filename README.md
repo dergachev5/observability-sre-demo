@@ -158,3 +158,43 @@ Traces:
 	•	Confirm distributed trace in Tempo
 
 ___
+---
+
+## 13. Golden Signals Dashboard
+
+Grafana dashboard created to monitor the Four Golden Signals methodology:
+
+- **Traffic** – HTTP Requests Per Second (RPS)
+- **Errors** – HTTP 5xx error rate
+- **Latency** – HTTP P95 request duration
+- **Saturation** – Container CPU usage
+
+Dashboard name:
+`Golden Signals Dashboard`
+
+Purpose:
+The dashboard provides real-time service health visibility and infrastructure pressure detection.
+
+---
+
+## 14. SLO Considerations
+
+Example Service Level Objectives (SLO):
+
+- Availability ≥ 99%
+- P95 latency < 500ms
+- Error rate < 1%
+
+SLOs are validated through Prometheus metrics and visualized in Grafana.
+
+---
+
+## 15. Demo Readiness Checklist
+
+Before presentation:
+
+```bash
+kubectl get pods -n otel-demo
+kubectl get pods -n monitoring
+kubectl get svc -A
+kubectl get ingress -A
