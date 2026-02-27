@@ -198,3 +198,28 @@ kubectl get pods -n otel-demo
 kubectl get pods -n monitoring
 kubectl get svc -A
 kubectl get ingress -A
+
+## Grafana Dashboard Import Steps
+
+### Export Dashboard
+
+1. Open Grafana
+2. Navigate to the dashboard
+3. Click Settings (gear icon)
+4. Click "Export"
+5. Save JSON file
+
+### Import Dashboard
+
+1. Go to Grafana → Dashboards → Import
+2. Upload the exported JSON file
+3. Select the correct data source (Prometheus)
+4. Click Import
+
+### Repository Versioning
+
+Dashboard JSON files should be stored in:
+
+/dashboards/
+
+This ensures reproducibility and version control of observability configuration.
