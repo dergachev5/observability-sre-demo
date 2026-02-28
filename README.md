@@ -223,3 +223,19 @@ Dashboard JSON files should be stored in:
 /dashboards/
 
 This ensures reproducibility and version control of observability configuration.
+
+Epic 7 – Load Testing (k6)
+
+EN
+	•	Baseline and stress tests implemented with k6
+	•	Results stored in load-testing/results/
+	•	Tested via port-forward on frontend-proxy
+	•	Average latency ~9–10ms
+	•	0% failed requests
+
+RU
+	•	Реализовано нагрузочное тестирование k6 (baseline + stress)
+	•	Результаты находятся в load-testing/results/
+	•	Тестирование через port-forward на frontend-proxy
+	•	Средняя задержка ~9–10мс
+	•	Ошибок 0%
