@@ -1,5 +1,5 @@
 # Observability SRE Project – AWS Kubernetes Lab
-
+This project demonstrates an end-to-end observability stack for Kubernetes using OpenTelemetry, Prometheus, Grafana, Loki, and Tempo.
 ## 1. Infrastructure
 
 - AWS EC2 (Ubuntu 24.04)
