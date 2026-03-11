@@ -24,6 +24,7 @@ Single-node Kubernetes cluster used for observability demonstration.
 OpenTelemetry Demo microservices deployed in `otel-demo` namespace.
 
 All services:
+
 - Type: ClusterIP
 - Not externally exposed
 
@@ -42,20 +43,21 @@ Deployed via Helm:
 
 Telemetry flow:
 
-Application → OpenTelemetry Collector →  
+Application → OpenTelemetry Collector
+
 Metrics → Prometheus → Grafana  
 Logs → Loki → Grafana  
-Traces → Tempo → Grafana  
+Traces → Tempo → Grafana
 
 ---
 
 ## 5. External Access Model
 
-Single external entry point:
+Single external entry point.
 
 Ingress NGINX  
 Service Type: NodePort  
-Port: 30080  
+Port: 30080
 
 Traffic flow:
 
@@ -93,86 +95,116 @@ kubectl get svc -A
 kubectl get ingress -A
 helm list -A
 kubectl get pods -A
+```
 
+---
 
-## 9. **Installation Procedure**
+## 9. Installation Procedure
 
 OpenTelemetry Demo deployment:
+
+```bash
 kubectl create namespace otel-demo
+
 helm repo add open-telemetry https://open-telemetry.github.io/opentelemetry-helm-charts
 helm repo update
-helm install otel-demo open-telemetry/opentelemetry-demo -n otel-demo
 
-Verify:
+helm install otel-demo open-telemetry/opentelemetry-demo -n otel-demo
+```
+
+Verify deployment:
+
+```bash
 kubectl -n otel-demo get pods
+```
 
 All pods must be in Running state.
 
-
+---
 
 ## 10. Monitoring Deployment
 
-Helm repositories:
+Add Helm repositories:
+
+```bash
 helm repo add prometheus-community https://prometheus-community.github.io/helm-charts
 helm repo add grafana https://grafana.github.io/helm-charts
 helm repo update
+```
 
 Install monitoring stack:
+
+```bash
 helm install monitoring prometheus-community/kube-prometheus-stack -n monitoring --create-namespace
 helm install loki grafana/loki -n monitoring
 helm install tempo grafana/tempo -n monitoring
+```
 
-Verify:
+Verify monitoring services:
+
+```bash
 kubectl -n monitoring get pods
+```
 
-
+---
 
 ## 11. Application Validation
 
-Access application:
+Access the application:
+
 http://<node-ip>.nip.io:30080
 
 Validation flow:
-	•	Add product to cart
-	•	Proceed to checkout
-	•	Complete order
-	•	Confirm order confirmation page
 
+- Add product to cart
+- Proceed to checkout
+- Complete order
+- Confirm order confirmation page
 
+---
 
 ## 12. Observability Validation
 
-Metrics:
-	•	Confirm request rate
-	•	Confirm error rate
-	•	Confirm latency metrics in Grafana
+### Metrics
 
-Logs:
-	•	Verify logs from:
-	•	checkout
-	•	payment
-	•	product-catalog
+Confirm in Grafana:
 
-Traces:
-	•	Trigger checkout
-	•	Confirm distributed trace in Tempo
+- request rate
+- error rate
+- latency metrics
 
-___
+### Logs
+
+Verify logs from services:
+
+- checkout
+- payment
+- product-catalog
+
+### Traces
+
+- Trigger checkout
+- Confirm distributed trace in Tempo
+
 ---
 
 ## 13. Golden Signals Dashboard
 
-Grafana dashboard created to monitor the Four Golden Signals methodology:
+Grafana dashboard created to monitor the Four Golden Signals methodology.
 
-- **Traffic** – HTTP Requests Per Second (RPS)
-- **Errors** – HTTP 5xx error rate
-- **Latency** – HTTP P95 request duration
-- **Saturation** – Container CPU usage
+Metrics monitored:
+
+- Traffic – HTTP Requests Per Second (RPS)
+- Errors – HTTP 5xx error rate
+- Latency – HTTP P95 request duration
+- Saturation – Container CPU usage
 
 Dashboard name:
-`Golden Signals Dashboard`
+
+Golden Signals Dashboard
 
 Purpose:
+
 The dashboard provides real-time service health visibility and infrastructure pressure detection.
 
 ---
@@ -198,6 +230,9 @@ kubectl get pods -n otel-demo
 kubectl get pods -n monitoring
 kubectl get svc -A
 kubectl get ingress -A
+```
+
+---
 
 ## Grafana Dashboard Import Steps
 
@@ -206,7 +241,7 @@ kubectl get ingress -A
 1. Open Grafana
 2. Navigate to the dashboard
 3. Click Settings (gear icon)
-4. Click "Export"
+4. Click Export
 5. Save JSON file
 
 ### Import Dashboard
@@ -216,26 +251,34 @@ kubectl get ingress -A
 3. Select the correct data source (Prometheus)
 4. Click Import
 
-### Repository Versioning
+---
+
+## Repository Versioning
 
 Dashboard JSON files should be stored in:
 
+```
 /dashboards/
+```
 
 This ensures reproducibility and version control of observability configuration.
 
-Epic 7 – Load Testing (k6)
+---
 
-EN
-	•	Baseline and stress tests implemented with k6
-	•	Results stored in load-testing/results/
-	•	Tested via port-forward on frontend-proxy
-	•	Average latency ~9–10ms
-	•	0% failed requests
+## Epic 7 – Load Testing (k6)
 
-RU
-	•	Реализовано нагрузочное тестирование k6 (baseline + stress)
-	•	Результаты находятся в load-testing/results/
-	•	Тестирование через port-forward на frontend-proxy
-	•	Средняя задержка ~9–10мс
-	•	Ошибок 0%
+### EN
+
+- Baseline and stress tests implemented with k6
+- Results stored in load-testing/results/
+- Tested via port-forward on frontend-proxy
+- Average latency ~9–10 ms
+- 0% failed requests
+
+### RU
+
+- Реализовано нагрузочное тестирование k6 (baseline + stress)
+- Результаты находятся в load-testing/results/
+- Тестирование через port-forward на frontend-proxy
+- Средняя задержка ~9–10 мс
+- Ошибок 0%
